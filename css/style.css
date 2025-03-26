@@ -1,0 +1,21 @@
+#product-catalog{
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+
+.single-product{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid black;
+    padding: 20px;
+    margin-bottom: 2rem;
+    width: 20%;
+}
+
+.single-product img{
+    width: 60%;
+}
