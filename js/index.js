@@ -18,20 +18,77 @@
 //     console.log(err)
 // })
 
+let base_url = "https://fakestoreapi.com/products/"
+
 function displayProduct(products){
     let product_catalog = document.getElementById('product-catalog')
-    let html =`
-    <div class="single-product">
-        <h5>Title: Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops</h5>
-        <img src="https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg" alt="">
-        <p>Description: 'Your perfect pack for everyday use and walks in th…to 15 inches in the padded sleeve, your everyday'</p>
-        <div>Category: men's clothing</div>
-        <div> $109.95</div>
-    </div>`
+
+    products.forEach(product => {
+        let html =`
+        <div class="single-product">
+            <h5>${product.title.substring(1, 10)}...</h5>
+            <img src="${product.image}" alt="${product.title}">
+            <p>${product.description.substring(1, 30)}...</p>
+            <div>${product.category}</div>
+            <div>${product.price}</div>
+            <div id="buttons">
+            <button class="one update">Update</button>
+            <button class="one delete">Delete</button>
+            </div>
+        </div>`
+
+        product_catalog.innerHTML += html
+    });
+
 }
 
 
-fetch("https://fakestoreapi.com/products/")
+// fetch("https://fakestoreapi.com/products/")
+// .then(res => res.json())
+// .then(data => console.log(data[0]))
+// .catch(err => console.log(err))
+
+// GET method 
+
+fetch(base_url)
 .then(res => res.json())
-.then(data => console.log(data[0]))
+.then(data => displayProduct(data))
+.catch(err => console.log(err)) 
+// POST method  
+
+fetch(base_url, {
+    method: "POST",
+    headers: {
+        "Content-Type" : "application/json"
+    },
+    body:JSON.stringify({key : value})
+})
+.then(res => res.json())
+.then(data => console.log(data))
 .catch(err => console.log(err))
+// DELETE method
+
+fetch(`${base_url} /${id}`, {
+    method: "DELETE"
+})
+.then(res => res.json())
+.then(data => console.log("Product deleted succesfully"))
+.catch(err => console.log(err))
+// PATCH method 
+
+fetch(`${base_url} /${id}`, {
+    method: "PATCH",
+    headers: {
+        "Content-Type" : "application/json"
+    },
+    body: JSON.stringify({key : value})
+})
+.then(res => res.json())
+.then(data => console.log("data"))
+.catch(err => console.log(err))
+
+// CRUD=>
+//     CREATE(post)
+//     READ(get)
+//     UPDATE(patch)
+//     DELETE 
